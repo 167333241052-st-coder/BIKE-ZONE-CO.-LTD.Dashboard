@@ -1486,9 +1486,9 @@
         async function loadSalesData() {
             let csvText = '';
             const urls = [
-                `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`,
-                `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=${GID}`,
-                'https://corsproxy.io/?' + encodeURIComponent(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=${GID}`)
+                `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}&t=${Date.now()}`,
+                `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=${GID}&t=${Date.now()}`,
+                'https://corsproxy.io/?' + encodeURIComponent(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=${GID}&t=${Date.now()}`)
             ];
 
             for (let u of urls) {
@@ -1507,7 +1507,6 @@
             }
 
             if (!csvText) {
-                alert('ไม่สามารถโหลดข้อมูลจาก Google Sheets ได้');
                 return;
             }
 
@@ -1706,7 +1705,6 @@
                 return matchSearch && matchBranch && matchRevenue && matchYear && matchMonth;
             });
 
-            currentPage = 1;
             renderTable();
             recalculateMetrics();
         }
@@ -1953,7 +1951,6 @@
                 prevBtn.onclick = () => { if(currentPage > 1) { currentPage--; renderTable(); } };
                 pagContainer.appendChild(prevBtn);
 
-                // ระบบปุ่มเปลี่ยนหน้าไดนามิก (ขยับปุ่มตามหน้าปัจจุบัน)
                 let startPage = Math.max(1, currentPage - 2);
                 let endPage = Math.min(totalPages, startPage + 4);
                 if (endPage - startPage < 4) {
@@ -2023,8 +2020,13 @@
             document.getElementById('cancelModalBtn').onclick = () => modal.style.display = 'none';
         }
 
-        // Run Startup
+        // 1. โหลดข้อมูลครั้งแรกทันทีที่เปิดหน้าเว็บ
         loadSalesData();
+
+        // 2. ตั้งเวลาอัปเดตข้อมูลอัตโนมัติทุกๆ 3 นาที (180,000 มิลลิวินาที)
+        setInterval(() => {
+            loadSalesData();
+        }, 180000);
     </script>
 </body>
 </html>
