@@ -40,7 +40,6 @@
             padding-bottom: 70px;
         }
 
-        /* Top Header */
         header {
             background-color: var(--header-bg);
             color: #ffffff;
@@ -50,6 +49,8 @@
             align-items: center;
             border-bottom: 3px solid var(--accent-cyan);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .header-brand {
@@ -70,6 +71,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .badge-sales {
@@ -96,6 +98,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -109,6 +112,7 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .btn-lang {
@@ -142,7 +146,6 @@
             color: #ffffff;
         }
 
-        /* Container Layout */
         .container {
             max-width: 1440px;
             margin: 20px auto;
@@ -152,7 +155,6 @@
             gap: 20px;
         }
 
-        /* Filter Section */
         .filter-card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -223,7 +225,6 @@
             background-color: #ffffff;
         }
 
-        /* KPI Cards Grid */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -285,7 +286,6 @@
         .kpi-icon.yellow { background-color: #fffbeb; color: #f59e0b; }
         .kpi-icon.purple { background-color: #f3e8ff; color: #8b5cf6; }
 
-        /* Charts Row */
         .charts-row {
             display: grid;
             grid-template-columns: 1.6fr 1fr;
@@ -342,6 +342,7 @@
             font-size: 12px;
             color: var(--text-secondary);
             font-weight: 600;
+            flex-wrap: wrap;
         }
 
         .legend-item {
@@ -356,7 +357,6 @@
             border-radius: 3px;
         }
 
-        /* Donut Breakdown List */
         .donut-legend-list {
             margin-top: 15px;
             display: flex;
@@ -393,7 +393,6 @@
             color: var(--text-primary);
         }
 
-        /* Bottom Row Grid (3 cards) */
         .metrics-grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -489,7 +488,6 @@
             text-transform: uppercase;
         }
 
-        /* Strategic Intelligence Section */
         .intelligence-card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -614,7 +612,6 @@
             text-align: right;
         }
 
-        /* Table Section */
         .table-card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -628,10 +625,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .table-wrapper {
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -639,6 +639,7 @@
             border-collapse: collapse;
             font-size: 12px;
             text-align: left;
+            min-width: 800px;
         }
 
         th {
@@ -671,16 +672,6 @@
             font-weight: 700;
         }
 
-        .txt-discount {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .txt-profit {
-            color: #10b981;
-            font-weight: 700;
-        }
-
         .action-btns {
             display: flex;
             gap: 8px;
@@ -708,6 +699,8 @@
             font-size: 11px;
             color: var(--text-muted);
             font-weight: 600;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .pagination-btns {
@@ -734,7 +727,6 @@
             border-color: #0f172a;
         }
 
-        /* Sticky Footer Bar */
         footer {
             position: fixed;
             bottom: 0;
@@ -749,12 +741,15 @@
             font-size: 12px;
             border-top: 1px solid #1e293b;
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .footer-stats {
             display: flex;
             gap: 24px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .footer-stat-item {
@@ -772,7 +767,6 @@
             color: var(--accent-cyan);
         }
 
-        /* Modal Form */
         .modal-overlay {
             position: fixed;
             top:0; left:0; right:0; bottom:0;
@@ -782,13 +776,16 @@
             align-items: center;
             justify-content: center;
             z-index: 999;
+            padding: 16px;
         }
 
         .modal-card {
             background: #ffffff;
             border-radius: 12px;
             width: 500px;
-            max-width: 90%;
+            max-width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             padding: 24px;
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
         }
@@ -855,7 +852,6 @@
             gap: 10px;
         }
 
-        /* Center chart text overlay for Donut */
         .chart-center-text {
             position: absolute;
             top: 50%;
@@ -877,6 +873,39 @@
             font-weight: 800;
             color: var(--text-primary);
         }
+
+        @media (max-width: 1024px) {
+            .filter-grid { grid-template-columns: repeat(3, 1fr); }
+            .filter-grid .input-group { grid-column: span 3; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .charts-row { grid-template-columns: 1fr; }
+            .metrics-grid-3 { grid-template-columns: 1fr; }
+            .intel-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-bottom: 120px; }
+            header { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
+            .header-actions { width: 100%; justify-content: space-between; }
+            .btn { flex: 1; justify-content: center; font-size: 11px; padding: 8px; }
+            .container { padding: 0 12px; margin: 12px auto; gap: 14px; }
+            .filter-card, .chart-card, .intelligence-card, .table-card { padding: 16px; }
+            .filter-grid { grid-template-columns: 1fr; }
+            .filter-grid .input-group { grid-column: span 1; }
+            .kpi-grid { grid-template-columns: 1fr; }
+            .kpi-value { font-size: 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+            footer { flex-direction: column; align-items: center; text-align: center; padding: 10px 16px; font-size: 10px; }
+            .footer-stats { gap: 12px; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .brand-title { font-size: 16px; }
+            .brand-subtitle { font-size: 9px; }
+            .header-actions { flex-direction: column; }
+            .btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -888,13 +917,13 @@
             <div>
                 <div class="brand-title">
                     BIKE ZONE CO., LTD.
-                    <span class="badge-sales">Sales Analytics</span>
+                    <span class="badge-sales" id="badgeSales">Sales Analytics</span>
                 </div>
-                <div class="brand-subtitle">EXECUTIVE MANAGEMENT SALES PERFORMANCE CONTROL CENTER</div>
+                <div class="brand-subtitle" id="brandSubtitle">EXECUTIVE MANAGEMENT SALES PERFORMANCE CONTROL CENTER</div>
             </div>
         </div>
         <div class="header-actions">
-            <button class="btn btn-lang"><i class="fa-solid fa-globe"></i> TH / ไทย</button>
+            <button class="btn btn-lang" id="langBtn"><i class="fa-solid fa-globe"></i> TH / ไทย</button>
             <button class="btn btn-primary" id="openModalBtn"><i class="fa-solid fa-plus"></i> Add New Sale Record</button>
             <button class="btn btn-outline" id="clearFiltersBtn"><i class="fa-solid fa-rotate-right"></i> Clear Filters</button>
         </div>
@@ -904,7 +933,7 @@
 
         <!-- Filter Card -->
         <div class="filter-card">
-            <div class="filter-header">
+            <div class="filter-header" id="filterHeader">
                 <i class="fa-solid fa-filter"></i> DATA ANALYSIS FILTERS & QUERY CONTROL
             </div>
             <div class="filter-grid">
@@ -939,15 +968,15 @@
         <div class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-info">
-                    <span class="kpi-title">Total Sales Revenue</span>
+                    <span class="kpi-title" id="kpi1Title">Total Sales Revenue</span>
                     <span class="kpi-value" id="kpiRevenue">0 ฿</span>
-                    <span class="kpi-subtext">Net accumulated revenue stream</span>
+                    <span class="kpi-subtext" id="kpi1Sub">Net accumulated revenue stream</span>
                 </div>
                 <div class="kpi-icon teal"><i class="fa-solid fa-dollar-sign"></i></div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-info">
-                    <span class="kpi-title">Total Profit Margins</span>
+                    <span class="kpi-title" id="kpi2Title">Total Profit Margins</span>
                     <span class="kpi-value" id="kpiProfit" style="color: #10b981;">0 ฿</span>
                     <span class="kpi-subtext">GP Margin: <strong id="kpiGpMargin" style="color: #10b981;">0%</strong></span>
                 </div>
@@ -955,17 +984,17 @@
             </div>
             <div class="kpi-card">
                 <div class="kpi-info">
-                    <span class="kpi-title">Discount Impact</span>
+                    <span class="kpi-title" id="kpi3Title">Discount Impact</span>
                     <span class="kpi-value" id="kpiDiscount" style="color: #d97706;">0 ฿</span>
-                    <span class="kpi-subtext">Total Promotional Discounts</span>
+                    <span class="kpi-subtext" id="kpi3Sub">Total Promotional Discounts</span>
                 </div>
                 <div class="kpi-icon yellow"><i class="fa-solid fa-percent"></i></div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-info">
-                    <span class="kpi-title">Total Inventory Units Sold</span>
+                    <span class="kpi-title" id="kpi4Title">Total Inventory Units Sold</span>
                     <span class="kpi-value" id="kpiUnits">0 Units</span>
-                    <span class="kpi-subtext">Total Quantity Sold</span>
+                    <span class="kpi-subtext" id="kpi4Sub">Total Quantity Sold</span>
                 </div>
                 <div class="kpi-icon purple"><i class="fa-solid fa-bag-shopping"></i></div>
             </div>
@@ -976,10 +1005,10 @@
             <!-- Left Stacked Bar Chart -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <div class="chart-title">
+                    <div class="chart-title" id="chart1Title">
                         <i class="fa-solid fa-chart-simple"></i> STACKED MONTHLY REVENUE, COST & DISCOUNT ANALYTICS
                     </div>
-                    <div class="chart-subtitle">
+                    <div class="chart-subtitle" id="chart1Sub">
                         Displays asking price breakdown: Profit Margin (Bottom), Cost (Middle), and Promotional Discount (Top).
                     </div>
                 </div>
@@ -989,15 +1018,15 @@
                 <div class="chart-legend-custom">
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #f59e0b;"></div>
-                        <span>Promo Discount (Top)</span>
+                        <span id="legPromo">Promo Discount (Top)</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #64748b;"></div>
-                        <span>Product Cost (Middle)</span>
+                        <span id="legCost">Product Cost (Middle)</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #10b981;"></div>
-                        <span>Profit Margin (Bottom)</span>
+                        <span id="legProfit">Profit Margin (Bottom)</span>
                     </div>
                 </div>
             </div>
@@ -1005,117 +1034,104 @@
             <!-- Right Donut Chart -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <div class="chart-title">
+                    <div class="chart-title" id="chart2Title">
                         <i class="fa-solid fa-layer-group"></i> REVENUE STREAM SHARE
                     </div>
-                    <div class="chart-subtitle">
+                    <div class="chart-subtitle" id="chart2Sub">
                         Contribution analysis by Product & Activity categories
                     </div>
                 </div>
                 <div class="chart-body" style="min-height: 180px; max-height: 200px;">
                     <canvas id="donutChart"></canvas>
                     <div class="chart-center-text">
-                        <div class="title">TOTAL SALES</div>
+                        <div class="title" id="donutCenterTitle">TOTAL SALES</div>
                         <div class="val" id="donutCenterVal">0 ฿</div>
                     </div>
                 </div>
-                <div class="donut-legend-list" id="donutLegendList">
-                    <!-- Dynamic Donut Legend -->
-                </div>
+                <div class="donut-legend-list" id="donutLegendList"></div>
             </div>
         </div>
 
-        <!-- Lower Section Grid (Brand Share, Payment Methods, Leaderboard) -->
+        <!-- Lower Section Grid -->
         <div class="metrics-grid-3">
-            <!-- Brand Share -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <div class="chart-title"><i class="fa-solid fa-tag"></i> DOMINANT BRAND VOLUME & SHARE</div>
-                    <div class="chart-subtitle">Top premium product brand contribution</div>
+                    <div class="chart-title" id="chart3Title"><i class="fa-solid fa-tag"></i> DOMINANT BRAND VOLUME & SHARE</div>
+                    <div class="chart-subtitle" id="chart3Sub">Top premium product brand contribution</div>
                 </div>
-                <div class="progress-list" id="brandProgressList">
-                    <!-- Dynamic Progress Bars -->
-                </div>
+                <div class="progress-list" id="brandProgressList"></div>
             </div>
 
-            <!-- Payment Methods -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <div class="chart-title"><i class="fa-solid fa-credit-card"></i> COLLECTION METHODS & CASHFLOW</div>
-                    <div class="chart-subtitle">How management collects transaction funds</div>
+                    <div class="chart-title" id="chart4Title"><i class="fa-solid fa-credit-card"></i> COLLECTION METHODS & CASHFLOW</div>
+                    <div class="chart-subtitle" id="chart4Sub">How management collects transaction funds</div>
                 </div>
-                <div class="donut-legend-list" id="paymentMethodsList" style="max-height: none; gap: 16px; margin-top: 10px;">
-                    <!-- Dynamic Payment Breakdown -->
-                </div>
+                <div class="donut-legend-list" id="paymentMethodsList" style="max-height: none; gap: 16px; margin-top: 10px;"></div>
                 <div style="margin-top: auto; padding-top: 20px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">GROSS REGISTERED PAYMENTS</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;" id="payTotalLabel">GROSS REGISTERED PAYMENTS</span>
                     <span style="font-size: 14px; font-weight: 800; color: var(--text-primary);" id="paymentTotalVal">0 ฿</span>
                 </div>
             </div>
 
-            <!-- Salesperson Leaderboard -->
             <div class="chart-card">
                 <div class="chart-header">
-                    <div class="chart-title"><i class="fa-solid fa-trophy"></i> SALESPERSON LEADERBOARD</div>
-                    <div class="chart-subtitle">Top closing agents of Bike Zone</div>
+                    <div class="chart-title" id="chart5Title"><i class="fa-solid fa-trophy"></i> SALESPERSON LEADERBOARD</div>
+                    <div class="chart-subtitle" id="chart5Sub">Top closing agents of Bike Zone</div>
                 </div>
-                <div class="leaderboard-list" id="leaderboardList">
-                    <!-- Dynamic Leaderboard Items -->
-                </div>
+                <div class="leaderboard-list" id="leaderboardList"></div>
             </div>
         </div>
 
-        <!-- Management Intelligence Section -->
+        <!-- Strategic Intelligence Section -->
         <div class="intelligence-card">
-            <div class="chart-title">
+            <div class="chart-title" id="intelHeader">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> MANAGEMENT INTELLIGENCE & ACTIONABLE STRATEGIC RECOMMENDATIONS
             </div>
             <div class="intel-grid">
-                <!-- Left Light Column -->
                 <div class="intel-box-light">
-                    <div style="font-size: 11px; font-weight: 700; color: #10b981; text-transform: uppercase;">
+                    <div style="font-size: 11px; font-weight: 700; color: #10b981; text-transform: uppercase;" id="intelStrengthHead">
                         <i class="fa-regular fa-thumbs-up"></i> CALCULATED CORE STRENGTHS
                     </div>
                     <div class="strength-item">
-                        <div class="strength-title">Exceptional Gross Profitability</div>
+                        <div class="strength-title" id="strTitle1">Exceptional Gross Profitability</div>
                         <div class="strength-desc" id="strengthDesc1">Average profit margin is solid, highlighting effective product pricing and low core inventory costs.</div>
                     </div>
                     <div class="strength-item">
-                        <div class="strength-title">Balanced Brand Portfolio</div>
+                        <div class="strength-title" id="strTitle2">Balanced Brand Portfolio</div>
                         <div class="strength-desc" id="strengthDesc2">Portfolio diversified with healthy contributions across premium frame and component brands.</div>
                     </div>
 
-                    <div style="font-size: 11px; font-weight: 700; color: #d97706; text-transform: uppercase; margin-top: 8px;">
+                    <div style="font-size: 11px; font-weight: 700; color: #d97706; text-transform: uppercase; margin-top: 8px;" id="intelWeakHead">
                         <i class="fa-regular fa-thumbs-down"></i> CALCULATED STRATEGIC VULNERABILITIES
                     </div>
                     <div class="vulnerability-item">
-                        <div class="vulnerability-title">Aggressive Promo Penetration</div>
-                        <div class="vulnerability-desc">Discounts active across key product lines. Customer base is sensitive to promotional bargain incentives.</div>
+                        <div class="vulnerability-title" id="vulTitle1">Aggressive Promo Penetration</div>
+                        <div class="vulnerability-desc" id="vulDesc1">Discounts active across key product lines. Customer base is sensitive to promotional bargain incentives.</div>
                     </div>
                     <div class="vulnerability-item">
-                        <div class="vulnerability-title">Lagging Service Monetization</div>
-                        <div class="vulnerability-desc">High-margin labor, fitting and tuning sessions present huge potential for upsell and recurring subscriptions.</div>
+                        <div class="vulnerability-title" id="vulTitle2">Lagging Service Monetization</div>
+                        <div class="vulnerability-desc" id="vulDesc2">High-margin labor, fitting and tuning sessions present huge potential for upsell and recurring subscriptions.</div>
                     </div>
                 </div>
 
-                <!-- Right Dark Column -->
                 <div class="intel-box-dark">
                     <div>
-                        <div class="dark-box-title">
+                        <div class="dark-box-title" id="intelDarkTitle">
                             <i class="fa-regular fa-circle-check"></i> VALUABLE STRATEGIC DIRECTIVES FOR MANAGEMENT
                         </div>
                         <div class="directive-list">
                             <div class="directive-item">
                                 <div class="directive-num">1</div>
-                                <div class="directive-text">Transition to multi-buy accessory bundle incentives rather than slashing cash price points on high-end bike frame catalogs.</div>
+                                <div class="directive-text" id="dir1">Transition to multi-buy accessory bundle incentives rather than slashing cash price points on high-end bike frame catalogs.</div>
                             </div>
                             <div class="directive-item">
                                 <div class="directive-num">2</div>
-                                <div class="directive-text">Introduce a 'Premium Bike Fit & Tuning Service' package with every high-end frame purchase. Upsell annual preventative bike care maintenance subscriptions.</div>
+                                <div class="directive-text" id="dir2">Introduce a 'Premium Bike Fit & Tuning Service' package with every high-end frame purchase. Upsell annual preventative bike care maintenance subscriptions.</div>
                             </div>
                             <div class="directive-item">
                                 <div class="directive-num">3</div>
-                                <div class="directive-text">Promote digital instant transfers by integrating a dynamic QR payment gateway at checking counters, minimizing merchant transaction fee liabilities.</div>
+                                <div class="directive-text" id="dir3">Promote digital instant transfers by integrating a dynamic QR payment gateway at checking counters, minimizing merchant transaction fee liabilities.</div>
                             </div>
                         </div>
                     </div>
@@ -1129,7 +1145,7 @@
         <!-- Table Card -->
         <div class="table-card">
             <div class="table-top-bar">
-                <div class="chart-title">
+                <div class="chart-title" id="tableHeaderTitle">
                     <i class="fa-solid fa-table"></i> RAW SALES LEDGER JOURNALS & AUDIT TRAIL
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted);">
@@ -1147,29 +1163,25 @@
                 <table id="salesTable">
                     <thead>
                         <tr>
-                            <th>PERIOD / DATE</th>
-                            <th>BRANCH</th>
-                            <th>CLIENT / SELLER</th>
-                            <th>PRODUCT DETAILS</th>
-                            <th>QNT</th>
-                            <th>PRICE/UNIT</th>
-                            <th>DISCOUNT</th>
-                            <th>GRAND TOTAL</th>
-                            <th>TOTAL PROFIT</th>
-                            <th>ACTIONS</th>
+                            <th id="thDate">PERIOD / DATE</th>
+                            <th id="thBranch">BRANCH</th>
+                            <th id="thClient">CLIENT / SELLER</th>
+                            <th id="thProduct">PRODUCT DETAILS</th>
+                            <th id="thQnt">QNT</th>
+                            <th id="thPrice">PRICE/UNIT</th>
+                            <th id="thDiscount">DISCOUNT</th>
+                            <th id="thTotal">GRAND TOTAL</th>
+                            <th id="thProfit">TOTAL PROFIT</th>
+                            <th id="thActions">ACTIONS</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <!-- Rows injected dynamically via JS -->
-                    </tbody>
+                    <tbody id="tableBody"></tbody>
                 </table>
             </div>
 
             <div class="pagination-container">
                 <div id="tableInfo">SHOWING 0 TO 0 OF 0 SALES LOGS</div>
-                <div class="pagination-btns" id="paginationBtns">
-                    <!-- Pagination injected via JS -->
-                </div>
+                <div class="pagination-btns" id="paginationBtns"></div>
             </div>
         </div>
 
@@ -1179,15 +1191,15 @@
     <footer>
         <div class="footer-stats">
             <div class="footer-stat-item">
-                <span class="stat-label">Store Records:</span>
+                <span class="stat-label" id="footLabel1">Store Records:</span>
                 <span class="stat-val" id="footerRecords">0</span>
             </div>
             <div class="footer-stat-item">
-                <span class="stat-label">Total Sales Revenue:</span>
+                <span class="stat-label" id="footLabel2">Total Sales Revenue:</span>
                 <span class="stat-val" id="footerRevenue">0 ฿</span>
             </div>
             <div class="footer-stat-item">
-                <span class="stat-label">Total Profit Margins:</span>
+                <span class="stat-label" id="footLabel3">Total Profit Margins:</span>
                 <span class="stat-val" id="footerProfit">0 ฿</span>
             </div>
         </div>
@@ -1200,17 +1212,17 @@
     <div class="modal-overlay" id="addModal">
         <div class="modal-card">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-plus-circle" style="color:var(--accent-cyan)"></i> Add New Sales Record</h3>
+                <h3><i class="fa-solid fa-plus-circle" style="color:var(--accent-cyan)"></i> <span id="modalTitle">Add New Sales Record</span></h3>
                 <i class="fa-solid fa-xmark modal-close" id="closeModalBtn"></i>
             </div>
             <form id="addRecordForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Date</label>
+                        <label id="lblDate">Date</label>
                         <input type="date" id="inputDate" class="form-input" required value="2026-01-25">
                     </div>
                     <div class="form-group">
-                        <label>Branch</label>
+                        <label id="lblBranch">Branch</label>
                         <select id="inputBranch" class="form-input">
                             <option value="HQ">HQ</option>
                             <option value="BKK">BKK</option>
@@ -1218,33 +1230,33 @@
                         </select>
                     </div>
                     <div class="form-group full">
-                        <label>Client Name / Salesperson</label>
+                        <label id="lblClient">Client Name / Salesperson</label>
                         <input type="text" id="inputClient" class="form-input" placeholder="e.g. บริษัท วีเอส ไบค์ / Khetsopon" required>
                     </div>
                     <div class="form-group full">
-                        <label>Product Details</label>
+                        <label id="lblProduct">Product Details</label>
                         <input type="text" id="inputProduct" class="form-input" placeholder="e.g. Cervelo 2026 S5 Frameset" required>
                     </div>
                     <div class="form-group">
-                        <label>Quantity</label>
+                        <label id="lblQnt">Quantity</label>
                         <input type="number" id="inputQnt" class="form-input" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Price / Unit (฿)</label>
+                        <label id="lblPrice">Price / Unit (฿)</label>
                         <input type="number" id="inputPrice" class="form-input" placeholder="235000" required>
                     </div>
                     <div class="form-group">
-                        <label>Discount (฿)</label>
+                        <label id="lblDiscount">Discount (฿)</label>
                         <input type="number" id="inputDiscount" class="form-input" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Profit Margin (฿)</label>
+                        <label id="lblProfit">Profit Margin (฿)</label>
                         <input type="number" id="inputProfit" class="form-input" placeholder="54554" required>
                     </div>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-outline" id="cancelModalBtn" style="color: #64748b; border-color: #cbd5e1;">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Sales Record</button>
+                    <button type="submit" class="btn btn-primary" id="saveModalBtn">Save Sales Record</button>
                 </div>
             </form>
         </div>
@@ -1252,7 +1264,6 @@
 
     <!-- JavaScript Engine -->
     <script>
-        // 1. Google Sheet Connection Setup
         const SHEET_ID = '1gX5OnRhTOsLrb2A_g51N5WSem_GQ6z844kISRUQ__jg';
         const GID = '42875203';
 
@@ -1260,6 +1271,149 @@
         let filteredData = [];
         let currentPage = 1;
         let rowsPerPage = 10;
+        let currentLang = 'EN';
+
+        const i18n = {
+            EN: {
+                langBtn: '<i class="fa-solid fa-globe"></i> TH / ไทย',
+                badgeSales: 'Sales Analytics',
+                brandSubtitle: 'EXECUTIVE MANAGEMENT SALES PERFORMANCE CONTROL CENTER',
+                openModalBtn: '<i class="fa-solid fa-plus"></i> Add New Sale Record',
+                clearFiltersBtn: '<i class="fa-solid fa-rotate-right"></i> Clear Filters',
+                filterHeader: '<i class="fa-solid fa-filter"></i> DATA ANALYSIS FILTERS & QUERY CONTROL',
+                searchPlaceholder: 'Brand, Product, Client, Seller...',
+                kpi1Title: 'Total Sales Revenue',
+                kpi1Sub: 'Net accumulated revenue stream',
+                kpi2Title: 'Total Profit Margins',
+                kpi3Title: 'Discount Impact',
+                kpi3Sub: 'Total Promotional Discounts',
+                kpi4Title: 'Total Inventory Units Sold',
+                kpi4Sub: 'Total Quantity Sold',
+                chart1Title: '<i class="fa-solid fa-chart-simple"></i> STACKED MONTHLY REVENUE, COST & DISCOUNT ANALYTICS',
+                chart1Sub: 'Displays asking price breakdown: Profit Margin (Bottom), Cost (Middle), and Promotional Discount (Top).',
+                legPromo: 'Promo Discount (Top)',
+                legCost: 'Product Cost (Middle)',
+                legProfit: 'Profit Margin (Bottom)',
+                chart2Title: '<i class="fa-solid fa-layer-group"></i> REVENUE STREAM SHARE',
+                chart2Sub: 'Contribution analysis by Product & Activity categories',
+                donutCenterTitle: 'TOTAL SALES',
+                chart3Title: '<i class="fa-solid fa-tag"></i> DOMINANT BRAND VOLUME & SHARE',
+                chart3Sub: 'Top premium product brand contribution',
+                chart4Title: '<i class="fa-solid fa-credit-card"></i> COLLECTION METHODS & CASHFLOW',
+                chart4Sub: 'How management collects transaction funds',
+                payTotalLabel: 'GROSS REGISTERED PAYMENTS',
+                chart5Title: '<i class="fa-solid fa-trophy"></i> SALESPERSON LEADERBOARD',
+                chart5Sub: 'Top closing agents of Bike Zone',
+                intelHeader: '<i class="fa-solid fa-wand-magic-sparkles"></i> MANAGEMENT INTELLIGENCE & ACTIONABLE STRATEGIC RECOMMENDATIONS',
+                intelStrengthHead: '<i class="fa-regular fa-thumbs-up"></i> CALCULATED CORE STRENGTHS',
+                strTitle1: 'Exceptional Gross Profitability',
+                strTitle2: 'Balanced Brand Portfolio',
+                strengthDesc2: 'Portfolio diversified with healthy contributions across premium frame and component brands.',
+                intelWeakHead: '<i class="fa-regular fa-thumbs-down"></i> CALCULATED STRATEGIC VULNERABILITIES',
+                vulTitle1: 'Aggressive Promo Penetration',
+                vulTitle2: 'Lagging Service Monetization',
+                intelDarkTitle: '<i class="fa-regular fa-circle-check"></i> VALUABLE STRATEGIC DIRECTIVES FOR MANAGEMENT',
+                dir1: 'Transition to multi-buy accessory bundle incentives rather than slashing cash price points on high-end bike frame catalogs.',
+                dir2: "Introduce a 'Premium Bike Fit & Tuning Service' package with every high-end frame purchase. Upsell annual preventative bike care maintenance subscriptions.",
+                dir3: 'Promote digital instant transfers by integrating a dynamic QR payment gateway at checking counters, minimizing merchant transaction fee liabilities.',
+                tableHeaderTitle: '<i class="fa-solid fa-table"></i> RAW SALES LEDGER JOURNALS & AUDIT TRAIL',
+                thDate: 'PERIOD / DATE',
+                thBranch: 'BRANCH',
+                thClient: 'CLIENT / SELLER',
+                thProduct: 'PRODUCT DETAILS',
+                thQnt: 'QNT',
+                thPrice: 'PRICE/UNIT',
+                thDiscount: 'DISCOUNT',
+                thTotal: 'GRAND TOTAL',
+                thProfit: 'TOTAL PROFIT',
+                thActions: 'ACTIONS',
+                footLabel1: 'Store Records:',
+                footLabel2: 'Total Sales Revenue:',
+                footLabel3: 'Total Profit Margins:'
+            },
+            TH: {
+                langBtn: '<i class="fa-solid fa-globe"></i> EN / English',
+                badgeSales: 'การวิเคราะห์ยอดขาย',
+                brandSubtitle: 'ศูนย์ควบคุมผลการดำเนินงานฝ่ายขายระดับบริหาร',
+                openModalBtn: '<i class="fa-solid fa-plus"></i> เพิ่มรายการขายใหม่',
+                clearFiltersBtn: '<i class="fa-solid fa-rotate-right"></i> ล้างตัวกรอง',
+                filterHeader: '<i class="fa-solid fa-filter"></i> ตัวกรองและการค้นหาข้อมูล',
+                searchPlaceholder: 'ค้นหา แบรนด์, สินค้า, ลูกค้า, พนักงาน...',
+                kpi1Title: 'รายได้ยอดขายรวม',
+                kpi1Sub: 'กระแสรายได้สะสมสุทธิ',
+                kpi2Title: 'กำไรขั้นต้นรวม',
+                kpi3Title: 'ผลกระทบจากส่วนลด',
+                kpi3Sub: 'ส่วนลดโปรโมชันรวมทั้งหมด',
+                kpi4Title: 'จำนวนสินค้าที่ขายได้',
+                kpi4Sub: 'จำนวนยูนิตรวมทั้งหมด',
+                chart1Title: '<i class="fa-solid fa-chart-simple"></i> การวิเคราะห์รายได้ ต้นทุน และส่วนลดรายเดือน',
+                chart1Sub: 'แสดงสัดส่วนราคาขาย: กำไร (ล่าง), ต้นทุน (กลาง), ส่วนลด (บน)',
+                legPromo: 'ส่วนลดโปรโมชัน (บน)',
+                legCost: 'ต้นทุนสินค้า (กลาง)',
+                legProfit: 'กำไรขั้นต้น (ล่าง)',
+                chart2Title: '<i class="fa-solid fa-layer-group"></i> สัดส่วนรายได้ตามหมวดหมู่',
+                chart2Sub: 'การวิเคราะห์สัดส่วนตามประเภทสินค้าและบริการ',
+                donutCenterTitle: 'ยอดขายรวม',
+                chart3Title: '<i class="fa-solid fa-tag"></i> สัดส่วนยอดขายตามแบรนด์หลัก',
+                chart3Sub: 'แบรนด์ระดับพรีเมียมที่มีสัดส่วนสูงสุด',
+                chart4Title: '<i class="fa-solid fa-credit-card"></i> ช่องทางการชำระเงินและกระแสเงินสด',
+                chart4Sub: 'สัดส่วนการรับชำระเงินของกิจการ',
+                payTotalLabel: 'ยอดรับชำระเงินรวม',
+                chart5Title: '<i class="fa-solid fa-trophy"></i> อันดับพนักงานขายยอดเยี่ยม',
+                chart5Sub: 'เจ้าหน้าที่ที่ทำยอดขายสูงสุด',
+                intelHeader: '<i class="fa-solid fa-wand-magic-sparkles"></i> ข้อมูลวิเคราะห์เชิงวิสัยทัศน์และข้อเสนอแนะทางกลยุทธ์',
+                intelStrengthHead: '<i class="fa-regular fa-thumbs-up"></i> จุดแข็งหลักที่คำนวณได้',
+                strTitle1: 'อัตรากำไรขั้นต้นสูงเป็นพิเศษ',
+                strTitle2: 'การกระจายพอร์ตแบรนด์สมดุล',
+                strengthDesc2: 'พอร์ตสินค้ามีความหลากหลาย มีสัดส่วนรายได้ที่ดีทั้งจากตัวเฟรมจักรยานและอะไหล่ประกอบ',
+                intelWeakHead: '<i class="fa-regular fa-thumbs-down"></i> จุดที่ควรเฝ้าระวังทางกลยุทธ์',
+                vulTitle1: 'การจัดโปรโมชันส่วนลดค่อนข้างสูง',
+                vulTitle2: 'โอกาสสร้างรายได้จากงานบริการ',
+                intelDarkTitle: '<i class="fa-regular fa-circle-check"></i> ข้อเสนอแนะเชิงนโยบายสำหรับฝ่ายบริหาร',
+                dir1: 'ปรับเปลี่ยนจากการลดราคาเงินสดมาเป็นการแถมแพ็กเกจอุปกรณ์เสริมแทน เพื่อรักษาระดับราคาขายของเฟรมรุ่นพรีเมียม',
+                dir2: 'จัดแพ็กเกจบริการฟิตติ้งและปรับแต่งฟรีเมื่อซื้อเฟรมรุ่นท็อป พร้อมนำเสนอสัญญาบริการดูแลรักษาจักรยานรายปี',
+                dir3: 'ส่งเสริมการชำระเงินผ่านการโอนแบบดิจิทัล/QR Code ที่เคาน์เตอร์ เพื่อลดภาระค่าธรรมเนียมการรับชำระเงิน',
+                tableHeaderTitle: '<i class="fa-solid fa-table"></i> สมุดบัญชีรายวันยอดขายและประวัติการทำรายการ',
+                thDate: 'งวด / วันที่',
+                thBranch: 'สาขา',
+                thClient: 'ลูกค้า / พนักงานขาย',
+                thProduct: 'รายละเอียดสินค้า',
+                thQnt: 'จำนวน',
+                thPrice: 'ราคา/หน่วย',
+                thDiscount: 'ส่วนลด',
+                thTotal: 'ยอดรวมสุทธิ',
+                thProfit: 'กำไรสุทธิ',
+                thActions: 'การจัดการ',
+                footLabel1: 'จำนวนรายการ:',
+                footLabel2: 'ยอดขายรวม:',
+                footLabel3: 'กำไรรวม:'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'EN' ? 'TH' : 'EN';
+            const langData = i18n[currentLang];
+
+            for (let key in langData) {
+                const el = document.getElementById(key);
+                if (el) {
+                    if (key === 'searchPlaceholder') {
+                        el.placeholder = langData[key];
+                    } else {
+                        el.innerHTML = langData[key];
+                    }
+                }
+            }
+
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.placeholder = langData.searchPlaceholder;
+
+            populateFilterDropdowns();
+            recalculateMetrics();
+            renderTable();
+        }
+
+        document.getElementById('langBtn')?.addEventListener('click', toggleLanguage);
 
         function formatCurr(num) {
             return new Intl.NumberFormat('th-TH', { maximumFractionDigits: 2 }).format(num || 0) + ' ฿';
@@ -1472,9 +1626,9 @@
             }).filter(item => item !== null && item.period && /^\d{4}-\d{1,2}$/.test(item.period));
         }
 
-        // Strict Filter Population Matching Expected Outputs Exactly
         function populateFilterDropdowns() {
-            // 1. STORE BRANCH (HQ, BKK, CNX)
+            const isTH = currentLang === 'TH';
+
             const branchSelect = document.getElementById('branchSelect');
             if (branchSelect) {
                 const validBranches = ['HQ', 'BKK', 'CNX'];
@@ -1482,12 +1636,11 @@
                 const uniqueBranches = rawBranches.filter(b => validBranches.includes(b.toUpperCase())).sort();
                 
                 const currentBranch = branchSelect.value;
-                branchSelect.innerHTML = `<option value="ALL">All Branches (${uniqueBranches.length})</option>`;
+                branchSelect.innerHTML = `<option value="ALL">${isTH ? 'สาขาทั้งหมด' : 'All Branches'} (${uniqueBranches.length})</option>`;
                 uniqueBranches.forEach(b => branchSelect.innerHTML += `<option value="${b}">${b}</option>`);
                 if (uniqueBranches.includes(currentBranch)) branchSelect.value = currentBranch;
             }
 
-            // 2. REVENUE STREAM (BIKE, SERVICES, SMALL SPARE PARTS, etc.)
             const revSelect = document.getElementById('revenueSelect');
             if (revSelect) {
                 const knownTypes = ['BIKE', 'SERVICES', 'SMALL SPARE PARTS', 'COMPONENTS', 'ACCESSORIES', 'CONSIGNMENT', 'NUTRITION', 'OUTFITTERS', 'KRWD', 'EVENT', 'Demo', 'ACTIVITIES', 'UCI'];
@@ -1498,24 +1651,22 @@
                 );
 
                 const currentRev = revSelect.value;
-                revSelect.innerHTML = `<option value="ALL">All Revenue Types (${uniqueCategories.length})</option>`;
+                revSelect.innerHTML = `<option value="ALL">${isTH ? 'ประเภทรายได้ทั้งหมด' : 'All Revenue Types'} (${uniqueCategories.length})</option>`;
                 uniqueCategories.forEach(c => revSelect.innerHTML += `<option value="${c}">${c}</option>`);
                 if (uniqueCategories.includes(currentRev)) revSelect.value = currentRev;
             }
 
-            // 3. YEAR (2026)
             const yearSelect = document.getElementById('yearSelect');
             if (yearSelect) {
                 const rawYears = [...new Set(salesData.map(d => String(d.year || '2026')))];
                 const uniqueYears = rawYears.filter(y => /^\d{4}$/.test(y)).sort();
                 
                 const currentYear = yearSelect.value;
-                yearSelect.innerHTML = `<option value="ALL">All Years (${uniqueYears.length})</option>`;
+                yearSelect.innerHTML = `<option value="ALL">${isTH ? 'ปีทั้งหมด' : 'All Years'} (${uniqueYears.length})</option>`;
                 uniqueYears.forEach(y => yearSelect.innerHTML += `<option value="${y}">${y}</option>`);
                 if (uniqueYears.includes(currentYear)) yearSelect.value = currentYear;
             }
 
-            // 4. MONTHLY PERIOD (2026-1 to 2026-5)
             const monthSelect = document.getElementById('monthSelect');
             if (monthSelect) {
                 const rawMonths = [...new Set(salesData.map(d => String(d.period)))];
@@ -1526,13 +1677,12 @@
                 });
 
                 const currentMonth = monthSelect.value;
-                monthSelect.innerHTML = `<option value="ALL">All Months (${uniqueMonths.length})</option>`;
+                monthSelect.innerHTML = `<option value="ALL">${isTH ? 'เดือนทั้งหมด' : 'All Months'} (${uniqueMonths.length})</option>`;
                 uniqueMonths.forEach(m => monthSelect.innerHTML += `<option value="${m}">${m}</option>`);
                 if (uniqueMonths.includes(currentMonth)) monthSelect.value = currentMonth;
             }
         }
 
-        // Apply Filter Logic
         function applyFilters() {
             const search = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
             const branch = document.getElementById('branchSelect')?.value || 'ALL';
@@ -1561,7 +1711,6 @@
             recalculateMetrics();
         }
 
-        // Recalculate Metrics
         function recalculateMetrics() {
             let totalRev = filteredData.reduce((acc, row) => acc + row.total, 0);
             let totalProf = filteredData.reduce((acc, row) => acc + row.profit, 0);
@@ -1574,7 +1723,7 @@
             if (document.getElementById('kpiProfit')) document.getElementById('kpiProfit').innerText = formatCurr(totalProf);
             if (document.getElementById('kpiGpMargin')) document.getElementById('kpiGpMargin').innerText = gpMargin + '%';
             if (document.getElementById('kpiDiscount')) document.getElementById('kpiDiscount').innerText = formatCurr(totalDisc);
-            if (document.getElementById('kpiUnits')) document.getElementById('kpiUnits').innerText = totalUnits.toLocaleString() + ' Units';
+            if (document.getElementById('kpiUnits')) document.getElementById('kpiUnits').innerText = totalUnits.toLocaleString() + (currentLang === 'TH' ? ' ชิ้น' : ' Units');
 
             if (stackedChart) {
                 let monthlyGrouped = groupBy(filteredData, item => item.period);
@@ -1597,13 +1746,14 @@
                 stackedChart.update();
             }
 
+            const donutColors = ['#0284c7', '#2563eb', '#8b5cf6', '#ec4899', '#f43f5e', '#10b981', '#f59e0b', '#6366f1', '#14b8a6', '#f97316'];
+
             if (donutChart) {
                 let catGrouped = groupBy(filteredData, item => item.category);
                 let sortedCats = Object.values(catGrouped).sort((a, b) => b.total - a.total);
 
                 let donutLabels = sortedCats.map(c => c.key);
                 let donutData = sortedCats.map(c => c.total);
-                const donutColors = ['#0284c7', '#2563eb', '#8b5cf6', '#ec4899', '#f43f5e', '#10b981', '#f59e0b', '#6366f1', '#14b8a6', '#f97316'];
 
                 donutChart.data.labels = donutLabels;
                 donutChart.data.datasets[0].data = donutData;
@@ -1613,10 +1763,132 @@
                 if (document.getElementById('donutCenterVal')) {
                     document.getElementById('donutCenterVal').innerText = (totalRev / 1000000).toFixed(2) + 'M ฿';
                 }
+
+                const donutLegendList = document.getElementById('donutLegendList');
+                if (donutLegendList) {
+                    donutLegendList.innerHTML = sortedCats.map((c, i) => {
+                        let pct = totalRev > 0 ? ((c.total / totalRev) * 100).toFixed(1) : 0;
+                        let color = donutColors[i % donutColors.length];
+                        return `
+                            <div class="donut-item">
+                                <div class="donut-left"><div class="donut-dot" style="background:${color}"></div> ${c.key}</div>
+                                <div class="donut-val">${formatCurr(c.total)} (${pct}%)</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            // Brand Share
+            let brandGrouped = groupBy(filteredData, item => item.brand);
+            let sortedBrands = Object.values(brandGrouped).sort((a, b) => b.total - a.total);
+            const brandListEl = document.getElementById('brandProgressList');
+
+            if (brandListEl) {
+                let topBrands = sortedBrands.slice(0, 5);
+                brandListEl.innerHTML = topBrands.map(b => {
+                    let pct = totalRev > 0 ? ((b.total / totalRev) * 100).toFixed(1) : 0;
+                    return `
+                        <div class="progress-item">
+                            <div class="progress-labels">
+                                <span>${b.key}</span>
+                                <span class="pct">${formatCurr(b.total)} (${pct}%)</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: ${Math.min(pct, 100)}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Payment Methods
+            let payGrouped = groupBy(filteredData, item => item.payment || 'Bank Transfer');
+            let sortedPay = Object.values(payGrouped).sort((a, b) => b.total - a.total);
+            const payListEl = document.getElementById('paymentMethodsList');
+            const payColors = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899'];
+
+            if (payListEl) {
+                payListEl.innerHTML = sortedPay.map((p, i) => {
+                    let pct = totalRev > 0 ? Math.round((p.total / totalRev) * 100) : 0;
+                    let color = payColors[i % payColors.length];
+                    let payName = p.key;
+                    if (currentLang === 'TH') {
+                        if (p.key === 'Bank Transfer') payName = 'โอนเงินผ่านธนาคาร';
+                        else if (p.key === 'Cash') payName = 'เงินสด';
+                        else if (p.key === 'Credit Card') payName = 'บัตรเครดิต';
+                    }
+                    return `
+                        <div class="donut-item">
+                            <div class="donut-left"><div class="donut-dot" style="background:${color}"></div> ${payName}</div>
+                            <div class="donut-val">${formatCurr(p.total)} <span style="color:#94a3b8; font-size:11px;">(${pct}%)</span></div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            if (document.getElementById('paymentTotalVal')) {
+                document.getElementById('paymentTotalVal').innerText = formatCurr(totalRev);
+            }
+
+            // Salesperson Leaderboard
+            let sellerGrouped = groupBy(filteredData, item => item.seller || item.client || 'Sales Management');
+            let sortedSellers = Object.values(sellerGrouped).sort((a, b) => b.total - a.total);
+            const leaderListEl = document.getElementById('leaderboardList');
+
+            if (leaderListEl) {
+                let topSellers = sortedSellers.slice(0, 5);
+                leaderListEl.innerHTML = topSellers.map((s, idx) => `
+                    <div class="leaderboard-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="rank-badge">${idx + 1}</div>
+                            <div class="leader-name">${s.key}</div>
+                        </div>
+                        <div>
+                            <div class="leader-sales">${formatCurr(s.total)}</div>
+                            <div class="leader-sub">${s.count} ${currentLang === 'TH' ? 'รายการปิดการขาย' : 'CLOSED SALES'}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Sticky Footer & Intel Tag
+            if (document.getElementById('footerRecords')) document.getElementById('footerRecords').innerText = filteredData.length.toLocaleString();
+            if (document.getElementById('footerRevenue')) document.getElementById('footerRevenue').innerText = formatCurr(totalRev);
+            if (document.getElementById('footerProfit')) document.getElementById('footerProfit').innerText = formatCurr(totalProf);
+            if (document.getElementById('intelFooterTag')) {
+                document.getElementById('intelFooterTag').innerText = currentLang === 'TH' 
+                    ? `ระบบประมวลผลสดอัตโนมัติจาก ${filteredData.length.toLocaleString()} รายการสมุดรายวันขาย`
+                    : `ENGINE GENERATED LIVE BASED ON ${filteredData.length.toLocaleString()} MATCHING SALES JOURNALS`;
+            }
+
+            // Dynamic Strategic Intelligence Text
+            let serviceRev = filteredData.filter(d => d.category && d.category.toUpperCase().includes('SERVICE')).reduce((acc, row) => acc + row.total, 0);
+            let servicePct = totalRev > 0 ? ((serviceRev / totalRev) * 100).toFixed(1) : '0';
+            let discPct = (totalRev + totalDisc) > 0 ? ((totalDisc / (totalRev + totalDisc)) * 100).toFixed(1) : '0';
+
+            if (currentLang === 'TH') {
+                if (document.getElementById('strengthDesc1')) {
+                    document.getElementById('strengthDesc1').innerHTML = `อัตรากำไรเฉลี่ยที่คำนวณได้จริงคือ <strong>${gpMargin}%</strong> สะท้อนถึงการตั้งราคาที่เหมาะสมและควบคุมต้นทุนได้ดี`;
+                }
+                if (document.getElementById('vulDesc1')) {
+                    document.getElementById('vulDesc1').innerHTML = `สัดส่วนส่วนลดสูงถึง <strong>${discPct}%</strong> ของยอดขายตั้ง กลุ่มลูกค้าค่อนข้างไวต่อโปรโมชัน`;
+                }
+                if (document.getElementById('vulDesc2')) {
+                    document.getElementById('vulDesc2').innerHTML = `รายได้งานบริการคิดเป็นเพียง <strong>${servicePct}%</strong> (${formatCurr(serviceRev)}) ของยอดขายรวม ยังมีโอกาสเติบโตได้อีกมาก`;
+                }
+            } else {
+                if (document.getElementById('strengthDesc1')) {
+                    document.getElementById('strengthDesc1').innerHTML = `Calculated average profit margin is solid at <strong>${gpMargin}%</strong>, highlighting effective product pricing.`;
+                }
+                if (document.getElementById('vulDesc1')) {
+                    document.getElementById('vulDesc1').innerHTML = `Promotional discount impact accounts for <strong>${discPct}%</strong> of total gross sales asking price.`;
+                }
+                if (document.getElementById('vulDesc2')) {
+                    document.getElementById('vulDesc2').innerHTML = `Service revenue contributes only <strong>${servicePct}%</strong> (${formatCurr(serviceRev)}) of total sales revenue.`;
+                }
             }
         }
 
-        // Render Table
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             if (!tbody) return;
@@ -1627,9 +1899,9 @@
             const pageData = filteredData.slice(startIdx, endIdx);
 
             if (pageData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #94a3b8;">No records found matching filters</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #94a3b8;">${currentLang === 'TH' ? 'ไม่พบข้อมูลที่ตรงกับเงื่อนไขตัวกรอง' : 'No records found matching filters'}</td></tr>`;
             } else {
-                pageData.forEach((row) => {
+                pageData.forEach((row, index) => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>
@@ -1650,11 +1922,71 @@
                         <td style="color:#f59e0b;">${new Intl.NumberFormat().format(row.discount)} ฿</td>
                         <td style="font-weight:800;">${new Intl.NumberFormat().format(row.total)} ฿</td>
                         <td style="color:#10b981; font-weight:700;">${new Intl.NumberFormat().format(row.profit)} ฿</td>
-                        <td>-</td>
+                        <td>
+                            <div class="action-btns">
+                                <i class="fa-solid fa-pen action-btn" onclick="editRow(${startIdx + index})"></i>
+                                <i class="fa-solid fa-trash action-btn delete" onclick="deleteRow(${startIdx + index})"></i>
+                            </div>
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 });
             }
+
+            const total = filteredData.length;
+            const showingStart = total === 0 ? 0 : startIdx + 1;
+            const showingEnd = Math.min(endIdx, total);
+            if (document.getElementById('tableInfo')) {
+                document.getElementById('tableInfo').innerText = currentLang === 'TH'
+                    ? `แสดงรายการที่ ${showingStart} ถึง ${showingEnd} จากทั้งหมด ${total.toLocaleString()} รายการ`
+                    : `SHOWING ${showingStart} TO ${showingEnd} OF ${total.toLocaleString()} SALES LOGS`;
+            }
+
+            const totalPages = Math.ceil(total / rowsPerPage) || 1;
+            const pagContainer = document.getElementById('paginationBtns');
+            if (pagContainer) {
+                pagContainer.innerHTML = '';
+
+                const prevBtn = document.createElement('div');
+                prevBtn.className = 'page-btn';
+                prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+                prevBtn.onclick = () => { if(currentPage > 1) { currentPage--; renderTable(); } };
+                pagContainer.appendChild(prevBtn);
+
+                // ระบบปุ่มเปลี่ยนหน้าไดนามิก (ขยับปุ่มตามหน้าปัจจุบัน)
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, startPage + 4);
+                if (endPage - startPage < 4) {
+                    startPage = Math.max(1, endPage - 4);
+                }
+
+                for(let i = startPage; i <= endPage; i++) {
+                    const btn = document.createElement('div');
+                    btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.innerText = i;
+                    btn.onclick = () => { currentPage = i; renderTable(); };
+                    pagContainer.appendChild(btn);
+                }
+
+                const nextBtn = document.createElement('div');
+                nextBtn.className = 'page-btn';
+                nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+                nextBtn.onclick = () => { if(currentPage < totalPages) { currentPage++; renderTable(); } };
+                pagContainer.appendChild(nextBtn);
+            }
+        }
+
+        function deleteRow(idx) {
+            const confirmMsg = currentLang === 'TH' ? 'คุณแน่ใจหรือไม่ว่าต้องการลบรายการขายนี้?' : 'Are you sure you want to delete this sale record?';
+            if(confirm(confirmMsg)) {
+                const item = filteredData[idx];
+                salesData = salesData.filter(d => d !== item);
+                applyFilters();
+            }
+        }
+
+        function editRow(idx) {
+            alert((currentLang === 'TH' ? 'กำลังแก้ไขรายการ: ' : 'Editing record: ') + filteredData[idx].id);
         }
 
         // Event Listeners
@@ -1672,6 +2004,24 @@
             if (document.getElementById('monthSelect')) document.getElementById('monthSelect').value = 'ALL';
             applyFilters();
         });
+
+        document.getElementById('recordsPerPage')?.addEventListener('change', (e) => {
+            rowsPerPage = parseInt(e.target.value);
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Modal Controls
+        const modal = document.getElementById('addModal');
+        if (document.getElementById('openModalBtn')) {
+            document.getElementById('openModalBtn').onclick = () => modal.style.display = 'flex';
+        }
+        if (document.getElementById('closeModalBtn')) {
+            document.getElementById('closeModalBtn').onclick = () => modal.style.display = 'none';
+        }
+        if (document.getElementById('cancelModalBtn')) {
+            document.getElementById('cancelModalBtn').onclick = () => modal.style.display = 'none';
+        }
 
         // Run Startup
         loadSalesData();
