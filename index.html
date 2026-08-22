@@ -1345,6 +1345,7 @@
     </div>
 
     <!-- JavaScript Engine -->
+    <!-- JavaScript Engine -->
     <script>
         const SHEET_ID = '1gX5OnRhTOsLrb2A_g51N5WSem_GQ6z844kISRUQ__jg';
         const GID = '42875203';
@@ -1713,8 +1714,9 @@
                 let qnt = cleanNum(getVal(idxQnt, 1)) || 1;
                 let price = cleanNum(getVal(idxPrice, 0));
                 let discount = cleanNum(getVal(idxDiscount, 0));
+                
+                // แก้ไขจุดที่ 1: ดึงคอลัมน์ AA ตรงๆ ไม่ใช้สูตรคำนวณแทนที่ เพื่อให้ยอดตรงกับ Excel
                 let total = cleanNum(getVal(idxTotal, 0));
-                if (total === 0 && price > 0) total = (price * qnt) - Math.abs(discount);
 
                 let profit = cleanNum(getVal(idxProfit, 0));
 
@@ -1741,10 +1743,10 @@
                     total: total,
                     profit: profit
                 };
-            }).filter(item => item !== null && item.period && /^\d{4}-\d{1,2}$/.test(item.period));
+            }).filter(item => item !== null); // แก้ไขจุดที่ 2: นับรวมทุกแถว ไม่ลบแถวที่ไร้รูปแบบงวดทิ้ง
         }
 
-        // Synchronize Date Pickers (Min/Max Constraints & Auto Fill)
+        // Synchronize Date Pickers Constraints
         function syncDateInputsWithFilters() {
             const startInput = document.getElementById('startDateInput');
             const endInput = document.getElementById('endDateInput');
@@ -1753,7 +1755,6 @@
             const selMonths = filterState.monthSelect || [];
             const selYears = filterState.yearSelect || [];
 
-            // 1. Single Month Selected (e.g. "2026-1" or "2026-01")
             if (selMonths.length === 1) {
                 const parts = selMonths[0].split('-');
                 if (parts.length === 2) {
@@ -1769,19 +1770,10 @@
                     startInput.max = maxDateStr;
                     endInput.min = minDateStr;
                     endInput.max = maxDateStr;
-
-                    // Set default dates if empty or out of bound
-                    if (!startInput.value || startInput.value < minDateStr || startInput.value > maxDateStr) {
-                        startInput.value = minDateStr;
-                    }
-                    if (!endInput.value || endInput.value < minDateStr || endInput.value > maxDateStr) {
-                        endInput.value = maxDateStr;
-                    }
                     return;
                 }
             }
 
-            // 2. Single Year Selected (e.g. "2026")
             if (selYears.length === 1) {
                 const y = selYears[0];
                 const minDateStr = `${y}-01-01`;
@@ -1791,17 +1783,9 @@
                 startInput.max = maxDateStr;
                 endInput.min = minDateStr;
                 endInput.max = maxDateStr;
-
-                if (startInput.value && (startInput.value < minDateStr || startInput.value > maxDateStr)) {
-                    startInput.value = minDateStr;
-                }
-                if (endInput.value && (endInput.value < minDateStr || endInput.value > maxDateStr)) {
-                    endInput.value = maxDateStr;
-                }
                 return;
             }
 
-            // 3. All Years/Months selected or Multiple
             startInput.removeAttribute('min');
             startInput.removeAttribute('max');
             endInput.removeAttribute('min');
@@ -1838,6 +1822,14 @@
         }
 
         function handleMultiSelectChange(id, value, isChecked) {
+            // ล้างค่าช่วงวันที่ในปฏิทินทันทีที่มีการกดเปลี่ยน Dropdown เดือนหรือปี
+            if (id === 'monthSelect' || id === 'yearSelect') {
+                const startIn = document.getElementById('startDateInput');
+                const endIn = document.getElementById('endDateInput');
+                if (startIn) startIn.value = '';
+                if (endIn) endIn.value = '';
+            }
+
             const allCb = document.getElementById(id + '_all');
             const itemCbs = Array.from(document.querySelectorAll('.' + id + '_item'));
 
@@ -1858,6 +1850,19 @@
             updateMultiSelectLabel(id);
             syncDateInputsWithFilters();
             applyFilters();
+        }
+
+        function resetMonthYearDropdowns() {
+            filterState.yearSelect = [];
+            filterState.monthSelect = [];
+            
+            ['yearSelect', 'monthSelect'].forEach(id => {
+                const allCb = document.getElementById(id + '_all');
+                if (allCb) allCb.checked = true;
+                const itemCbs = document.querySelectorAll('.' + id + '_item');
+                itemCbs.forEach(cb => cb.checked = true);
+                updateMultiSelectLabel(id);
+            });
         }
 
         function updateMultiSelectLabel(id) {
@@ -2233,7 +2238,7 @@
                 const nextBtn = document.createElement('div');
                 nextBtn.className = 'page-btn';
                 nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
-                nextBtn.onclick = () => { if(currentPage < totalPages) { currentPage++; renderTable(); } };
+                nextBtn.onclick = () => { if(currentPage < totalPages) { currentPage--; renderTable(); } };
                 pagContainer.appendChild(nextBtn);
             }
         }
@@ -2258,6 +2263,8 @@
             const startVal = document.getElementById('startDateInput').value;
             if (startVal) {
                 document.getElementById('endDateInput').min = startVal;
+                // ล้างค่า Dropdown เดือน/ปี อัตโนมัติเมื่อเลือกวันที่เฉพาะเจาะจง
+                resetMonthYearDropdowns();
             }
             applyFilters();
         });
@@ -2266,6 +2273,8 @@
             const endVal = document.getElementById('endDateInput').value;
             if (endVal) {
                 document.getElementById('startDateInput').max = endVal;
+                // ล้างค่า Dropdown เดือน/ปี อัตโนมัติเมื่อเลือกวันที่เฉพาะเจาะจง
+                resetMonthYearDropdowns();
             }
             applyFilters();
         });
@@ -2315,10 +2324,10 @@
             document.getElementById('cancelModalBtn').onclick = () => modal.style.display = 'none';
         }
 
-        // 1. โหลดข้อมูลครั้งแรกทันทีที่เปิดหน้าเว็บ
+        // โหลดข้อมูลครั้งแรก
         loadSalesData();
 
-        // 2. ตั้งเวลาอัปเดตข้อมูลอัตโนมัติทุกๆ 3 นาที (180,000 มิลลิวินาที)
+        // ตั้งเวลาอัปเดตข้อมูลอัตโนมัติทุกๆ 3 นาที
         setInterval(() => {
             loadSalesData();
         }, 180000);
