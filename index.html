@@ -181,7 +181,7 @@
 
         .filter-grid {
             display: grid;
-            grid-template-columns: 2fr repeat(4, 1fr);
+            grid-template-columns: 2fr repeat(6, 1fr);
             gap: 12px;
         }
 
@@ -210,19 +210,85 @@
             transition: border 0.2s;
         }
 
-        select.filter-control {
-            padding-left: 12px;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%3a64748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 16px;
-            cursor: pointer;
+        /* Custom Multi-Select Dropdown Styles */
+        .custom-multiselect {
+            position: relative;
+            width: 100%;
         }
 
-        .filter-control:focus {
+        .multiselect-btn {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: #f8fafc;
+            color: var(--text-primary);
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .multiselect-btn:hover, .multiselect-btn:focus {
             border-color: var(--accent-cyan);
             background-color: #ffffff;
+        }
+
+        .multiselect-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 6px;
+        }
+
+        .multiselect-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            z-index: 100;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 6px;
+        }
+
+        .multiselect-dropdown.show {
+            display: block;
+        }
+
+        .multiselect-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: var(--text-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s ease;
+        }
+
+        .multiselect-option:hover {
+            background-color: #f1f5f9;
+        }
+
+        .multiselect-option input[type="checkbox"] {
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
         }
 
         .kpi-grid {
@@ -876,7 +942,7 @@
 
         @media (max-width: 1024px) {
             .filter-grid { grid-template-columns: repeat(3, 1fr); }
-            .filter-grid .input-group { grid-column: span 3; }
+            .filter-grid .input-group:first-child { grid-column: span 3; }
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .charts-row { grid-template-columns: 1fr; }
             .metrics-grid-3 { grid-template-columns: 1fr; }
@@ -891,7 +957,7 @@
             .container { padding: 0 12px; margin: 12px auto; gap: 14px; }
             .filter-card, .chart-card, .intelligence-card, .table-card { padding: 16px; }
             .filter-grid { grid-template-columns: 1fr; }
-            .filter-grid .input-group { grid-column: span 1; }
+            .filter-grid .input-group:first-child { grid-column: span 1; }
             .kpi-grid { grid-template-columns: 1fr; }
             .kpi-value { font-size: 20px; }
             .form-grid { grid-template-columns: 1fr; }
@@ -941,25 +1007,41 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" id="searchInput" class="filter-control" placeholder="Brand, Product, Client, Seller...">
                 </div>
-                <div>
-                    <select id="branchSelect" class="filter-control">
-                        <option value="ALL">All Branches</option>
-                    </select>
+                <div class="input-group" title="Start Date / วันที่เริ่มต้น">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <input type="date" id="startDateInput" class="filter-control" placeholder="Start Date">
                 </div>
-                <div>
-                    <select id="revenueSelect" class="filter-control">
-                        <option value="ALL">All Revenue Types</option>
-                    </select>
+                <div class="input-group" title="End Date / วันที่สิ้นสุด">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <input type="date" id="endDateInput" class="filter-control" placeholder="End Date">
                 </div>
-                <div>
-                    <select id="yearSelect" class="filter-control">
-                        <option value="ALL">All Years</option>
-                    </select>
+                <div class="custom-multiselect" id="branchSelectWrapper">
+                    <button type="button" class="multiselect-btn" onclick="toggleDropdown('branchSelectDropdown', event)">
+                        <span class="multiselect-label" id="branchSelectLabel">All Branches</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 11px; color: var(--text-muted);"></i>
+                    </button>
+                    <div class="multiselect-dropdown" id="branchSelectDropdown"></div>
                 </div>
-                <div>
-                    <select id="monthSelect" class="filter-control">
-                        <option value="ALL">All Months</option>
-                    </select>
+                <div class="custom-multiselect" id="revenueSelectWrapper">
+                    <button type="button" class="multiselect-btn" onclick="toggleDropdown('revenueSelectDropdown', event)">
+                        <span class="multiselect-label" id="revenueSelectLabel">All Revenue Types</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 11px; color: var(--text-muted);"></i>
+                    </button>
+                    <div class="multiselect-dropdown" id="revenueSelectDropdown"></div>
+                </div>
+                <div class="custom-multiselect" id="yearSelectWrapper">
+                    <button type="button" class="multiselect-btn" onclick="toggleDropdown('yearSelectDropdown', event)">
+                        <span class="multiselect-label" id="yearSelectLabel">All Years</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 11px; color: var(--text-muted);"></i>
+                    </button>
+                    <div class="multiselect-dropdown" id="yearSelectDropdown"></div>
+                </div>
+                <div class="custom-multiselect" id="monthSelectWrapper">
+                    <button type="button" class="multiselect-btn" onclick="toggleDropdown('monthSelectDropdown', event)">
+                        <span class="multiselect-label" id="monthSelectLabel">All Months</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 11px; color: var(--text-muted);"></i>
+                    </button>
+                    <div class="multiselect-dropdown" id="monthSelectDropdown"></div>
                 </div>
             </div>
         </div>
@@ -1273,6 +1355,14 @@
         let rowsPerPage = 10;
         let currentLang = 'EN';
 
+        // Multi-Select Filters State
+        let filterState = {
+            branchSelect: [],
+            revenueSelect: [],
+            yearSelect: [],
+            monthSelect: []
+        };
+
         const i18n = {
             EN: {
                 langBtn: '<i class="fa-solid fa-globe"></i> TH / ไทย',
@@ -1389,6 +1479,35 @@
                 footLabel3: 'กำไรรวม:'
             }
         };
+
+        function parseToDate(dateStr) {
+            if (!dateStr) return null;
+            dateStr = String(dateStr).trim();
+
+            if (dateStr.includes('/')) {
+                const parts = dateStr.split('/');
+                if (parts.length === 3) {
+                    let d = parseInt(parts[0], 10);
+                    let m = parseInt(parts[1], 10) - 1;
+                    let y = parseInt(parts[2], 10);
+                    if (y < 100) y += 2000;
+                    return new Date(y, m, d);
+                }
+            }
+
+            if (dateStr.includes('-')) {
+                const parts = dateStr.split('-');
+                if (parts.length === 3) {
+                    let y = parseInt(parts[0], 10);
+                    let m = parseInt(parts[1], 10) - 1;
+                    let d = parseInt(parts[2], 10);
+                    return new Date(y, m, d);
+                }
+            }
+
+            const d = new Date(dateStr);
+            return isNaN(d.getTime()) ? null : d;
+        }
 
         function toggleLanguage() {
             currentLang = currentLang === 'EN' ? 'TH' : 'EN';
@@ -1625,69 +1744,206 @@
             }).filter(item => item !== null && item.period && /^\d{4}-\d{1,2}$/.test(item.period));
         }
 
+        // Synchronize Date Pickers (Min/Max Constraints & Auto Fill)
+        function syncDateInputsWithFilters() {
+            const startInput = document.getElementById('startDateInput');
+            const endInput = document.getElementById('endDateInput');
+            if (!startInput || !endInput) return;
+
+            const selMonths = filterState.monthSelect || [];
+            const selYears = filterState.yearSelect || [];
+
+            // 1. Single Month Selected (e.g. "2026-1" or "2026-01")
+            if (selMonths.length === 1) {
+                const parts = selMonths[0].split('-');
+                if (parts.length === 2) {
+                    const y = parseInt(parts[0], 10);
+                    const m = parseInt(parts[1], 10);
+                    const padM = String(m).padStart(2, '0');
+                    const lastDay = new Date(y, m, 0).getDate();
+                    
+                    const minDateStr = `${y}-${padM}-01`;
+                    const maxDateStr = `${y}-${padM}-${String(lastDay).padStart(2, '0')}`;
+
+                    startInput.min = minDateStr;
+                    startInput.max = maxDateStr;
+                    endInput.min = minDateStr;
+                    endInput.max = maxDateStr;
+
+                    // Set default dates if empty or out of bound
+                    if (!startInput.value || startInput.value < minDateStr || startInput.value > maxDateStr) {
+                        startInput.value = minDateStr;
+                    }
+                    if (!endInput.value || endInput.value < minDateStr || endInput.value > maxDateStr) {
+                        endInput.value = maxDateStr;
+                    }
+                    return;
+                }
+            }
+
+            // 2. Single Year Selected (e.g. "2026")
+            if (selYears.length === 1) {
+                const y = selYears[0];
+                const minDateStr = `${y}-01-01`;
+                const maxDateStr = `${y}-12-31`;
+
+                startInput.min = minDateStr;
+                startInput.max = maxDateStr;
+                endInput.min = minDateStr;
+                endInput.max = maxDateStr;
+
+                if (startInput.value && (startInput.value < minDateStr || startInput.value > maxDateStr)) {
+                    startInput.value = minDateStr;
+                }
+                if (endInput.value && (endInput.value < minDateStr || endInput.value > maxDateStr)) {
+                    endInput.value = maxDateStr;
+                }
+                return;
+            }
+
+            // 3. All Years/Months selected or Multiple
+            startInput.removeAttribute('min');
+            startInput.removeAttribute('max');
+            endInput.removeAttribute('min');
+            endInput.removeAttribute('max');
+        }
+
+        // Multi-Select UI Functions
+        function populateMultiSelect(id, items, allLabel) {
+            const container = document.getElementById(id + 'Dropdown');
+            if (!container) return;
+
+            let prevSelected = filterState[id] || [];
+
+            let html = `
+                <label class="multiselect-option">
+                    <input type="checkbox" value="ALL" id="${id}_all" ${prevSelected.length === 0 ? 'checked' : ''} onchange="handleMultiSelectChange('${id}', 'ALL', this.checked)">
+                    <strong>${allLabel} (${items.length})</strong>
+                </label>
+                <div style="height: 1px; background: #e2e8f0; margin: 4px 0;"></div>
+            `;
+
+            items.forEach(item => {
+                let isChecked = (prevSelected.length === 0 || prevSelected.includes(item));
+                html += `
+                    <label class="multiselect-option">
+                        <input type="checkbox" value="${item}" class="${id}_item" ${isChecked ? 'checked' : ''} onchange="handleMultiSelectChange('${id}', '${item}', this.checked)">
+                        <span>${item}</span>
+                    </label>
+                `;
+            });
+
+            container.innerHTML = html;
+            updateMultiSelectLabel(id);
+        }
+
+        function handleMultiSelectChange(id, value, isChecked) {
+            const allCb = document.getElementById(id + '_all');
+            const itemCbs = Array.from(document.querySelectorAll('.' + id + '_item'));
+
+            if (value === 'ALL') {
+                itemCbs.forEach(cb => cb.checked = isChecked);
+                filterState[id] = [];
+            } else {
+                const checkedCbs = itemCbs.filter(cb => cb.checked);
+                if (checkedCbs.length === itemCbs.length || checkedCbs.length === 0) {
+                    if (allCb) allCb.checked = true;
+                    itemCbs.forEach(cb => cb.checked = true);
+                    filterState[id] = [];
+                } else {
+                    if (allCb) allCb.checked = false;
+                    filterState[id] = checkedCbs.map(cb => cb.value);
+                }
+            }
+            updateMultiSelectLabel(id);
+            syncDateInputsWithFilters();
+            applyFilters();
+        }
+
+        function updateMultiSelectLabel(id) {
+            const isTH = currentLang === 'TH';
+            let defaultLabels = {
+                branchSelect: isTH ? 'สาขาทั้งหมด' : 'All Branches',
+                revenueSelect: isTH ? 'ประเภทรายได้ทั้งหมด' : 'All Revenue Types',
+                yearSelect: isTH ? 'ปีทั้งหมด' : 'All Years',
+                monthSelect: isTH ? 'เดือนทั้งหมด' : 'All Months'
+            };
+            const labelEl = document.getElementById(id + 'Label');
+            if (!labelEl) return;
+
+            const selected = filterState[id] || [];
+            const defaultLabel = defaultLabels[id] || 'All';
+
+            if (selected.length === 0) {
+                labelEl.innerText = defaultLabel;
+            } else if (selected.length <= 2) {
+                labelEl.innerText = selected.join(', ');
+            } else {
+                labelEl.innerText = `${selected.length} ${isTH ? 'รายการที่เลือก' : 'Selected'}`;
+            }
+        }
+
+        function toggleDropdown(dropdownId, e) {
+            if (e) e.stopPropagation();
+            const target = document.getElementById(dropdownId);
+            const allDropdowns = document.querySelectorAll('.multiselect-dropdown');
+            allDropdowns.forEach(d => {
+                if (d !== target) d.classList.remove('show');
+            });
+            if (target) target.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-multiselect')) {
+                document.querySelectorAll('.multiselect-dropdown').forEach(d => d.classList.remove('show'));
+            }
+        });
+
         function populateFilterDropdowns() {
             const isTH = currentLang === 'TH';
 
-            const branchSelect = document.getElementById('branchSelect');
-            if (branchSelect) {
-                const validBranches = ['HQ', 'BKK', 'CNX'];
-                const rawBranches = [...new Set(salesData.map(d => d.branch))];
-                const uniqueBranches = rawBranches.filter(b => validBranches.includes(b.toUpperCase())).sort();
-                
-                const currentBranch = branchSelect.value;
-                branchSelect.innerHTML = `<option value="ALL">${isTH ? 'สาขาทั้งหมด' : 'All Branches'} (${uniqueBranches.length})</option>`;
-                uniqueBranches.forEach(b => branchSelect.innerHTML += `<option value="${b}">${b}</option>`);
-                if (uniqueBranches.includes(currentBranch)) branchSelect.value = currentBranch;
-            }
+            // Branch Multi-Select
+            const validBranches = ['HQ', 'BKK', 'CNX'];
+            const rawBranches = [...new Set(salesData.map(d => d.branch))];
+            const uniqueBranches = rawBranches.filter(b => validBranches.includes(b.toUpperCase())).sort();
+            populateMultiSelect('branchSelect', uniqueBranches, isTH ? 'สาขาทั้งหมด' : 'All Branches');
 
-            const revSelect = document.getElementById('revenueSelect');
-            if (revSelect) {
-                const knownTypes = ['BIKE', 'SERVICES', 'SMALL SPARE PARTS', 'COMPONENTS', 'ACCESSORIES', 'CONSIGNMENT', 'NUTRITION', 'OUTFITTERS', 'KRWD', 'EVENT', 'Demo', 'ACTIVITIES', 'UCI'];
-                const rawCategories = [...new Set(salesData.map(d => d.category))];
-                
-                const uniqueCategories = knownTypes.filter(kt => 
-                    rawCategories.some(rc => rc && rc.trim().toUpperCase() === kt.toUpperCase())
-                );
+            // Revenue Multi-Select
+            const knownTypes = ['BIKE', 'SERVICES', 'SMALL SPARE PARTS', 'COMPONENTS', 'ACCESSORIES', 'CONSIGNMENT', 'NUTRITION', 'OUTFITTERS', 'KRWD', 'EVENT', 'Demo', 'ACTIVITIES', 'UCI'];
+            const rawCategories = [...new Set(salesData.map(d => d.category))];
+            const uniqueCategories = knownTypes.filter(kt => 
+                rawCategories.some(rc => rc && rc.trim().toUpperCase() === kt.toUpperCase())
+            );
+            populateMultiSelect('revenueSelect', uniqueCategories, isTH ? 'ประเภทรายได้ทั้งหมด' : 'All Revenue Types');
 
-                const currentRev = revSelect.value;
-                revSelect.innerHTML = `<option value="ALL">${isTH ? 'ประเภทรายได้ทั้งหมด' : 'All Revenue Types'} (${uniqueCategories.length})</option>`;
-                uniqueCategories.forEach(c => revSelect.innerHTML += `<option value="${c}">${c}</option>`);
-                if (uniqueCategories.includes(currentRev)) revSelect.value = currentRev;
-            }
+            // Year Multi-Select
+            const rawYears = [...new Set(salesData.map(d => String(d.year || '2026')))];
+            const uniqueYears = rawYears.filter(y => /^\d{4}$/.test(y)).sort();
+            populateMultiSelect('yearSelect', uniqueYears, isTH ? 'ปีทั้งหมด' : 'All Years');
 
-            const yearSelect = document.getElementById('yearSelect');
-            if (yearSelect) {
-                const rawYears = [...new Set(salesData.map(d => String(d.year || '2026')))];
-                const uniqueYears = rawYears.filter(y => /^\d{4}$/.test(y)).sort();
-                
-                const currentYear = yearSelect.value;
-                yearSelect.innerHTML = `<option value="ALL">${isTH ? 'ปีทั้งหมด' : 'All Years'} (${uniqueYears.length})</option>`;
-                uniqueYears.forEach(y => yearSelect.innerHTML += `<option value="${y}">${y}</option>`);
-                if (uniqueYears.includes(currentYear)) yearSelect.value = currentYear;
-            }
-
-            const monthSelect = document.getElementById('monthSelect');
-            if (monthSelect) {
-                const rawMonths = [...new Set(salesData.map(d => String(d.period)))];
-                const uniqueMonths = rawMonths.filter(m => /^\d{4}-\d{1,2}$/.test(m)).sort((a, b) => {
-                    let [yA, mA] = a.split('-').map(Number);
-                    let [yB, mB] = b.split('-').map(Number);
-                    return yA !== yB ? yA - yB : mA - mB;
-                });
-
-                const currentMonth = monthSelect.value;
-                monthSelect.innerHTML = `<option value="ALL">${isTH ? 'เดือนทั้งหมด' : 'All Months'} (${uniqueMonths.length})</option>`;
-                uniqueMonths.forEach(m => monthSelect.innerHTML += `<option value="${m}">${m}</option>`);
-                if (uniqueMonths.includes(currentMonth)) monthSelect.value = currentMonth;
-            }
+            // Month Multi-Select
+            const rawMonths = [...new Set(salesData.map(d => String(d.period)))];
+            const uniqueMonths = rawMonths.filter(m => /^\d{4}-\d{1,2}$/.test(m)).sort((a, b) => {
+                let [yA, mA] = a.split('-').map(Number);
+                let [yB, mB] = b.split('-').map(Number);
+                return yA !== yB ? yA - yB : mA - mB;
+            });
+            populateMultiSelect('monthSelect', uniqueMonths, isTH ? 'เดือนทั้งหมด' : 'All Months');
         }
 
         function applyFilters() {
             const search = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
-            const branch = document.getElementById('branchSelect')?.value || 'ALL';
-            const revenue = document.getElementById('revenueSelect')?.value || 'ALL';
-            const year = document.getElementById('yearSelect')?.value || 'ALL';
-            const month = document.getElementById('monthSelect')?.value || 'ALL';
+            const startDateVal = document.getElementById('startDateInput')?.value;
+            const endDateVal = document.getElementById('endDateInput')?.value;
+
+            const startD = startDateVal ? parseToDate(startDateVal) : null;
+            const endD = endDateVal ? parseToDate(endDateVal) : null;
+            if (endD) endD.setHours(23, 59, 59, 999);
+
+            const selBranches = filterState.branchSelect || [];
+            const selRevenues = (filterState.revenueSelect || []).map(v => v.toUpperCase());
+            const selYears = filterState.yearSelect || [];
+            const selMonths = filterState.monthSelect || [];
 
             filteredData = salesData.filter(item => {
                 const matchSearch = !search || 
@@ -1697,12 +1953,21 @@
                     (item.brand && item.brand.toLowerCase().includes(search)) ||
                     (item.category && item.category.toLowerCase().includes(search));
                 
-                const matchBranch = (branch === 'ALL' || item.branch === branch);
-                const matchRevenue = (revenue === 'ALL' || item.category.toUpperCase() === revenue.toUpperCase());
-                const matchYear = (year === 'ALL' || String(item.year) === year || item.period.startsWith(year));
-                const matchMonth = (month === 'ALL' || item.period === month);
+                const matchBranch = (selBranches.length === 0 || selBranches.includes(item.branch));
+                const matchRevenue = (selRevenues.length === 0 || selRevenues.includes(item.category.toUpperCase()));
+                const matchYear = (selYears.length === 0 || selYears.includes(String(item.year)) || selYears.some(y => item.period.startsWith(y)));
+                const matchMonth = (selMonths.length === 0 || selMonths.includes(item.period));
 
-                return matchSearch && matchBranch && matchRevenue && matchYear && matchMonth;
+                let matchDate = true;
+                if (startD || endD) {
+                    const itemD = parseToDate(item.date);
+                    if (itemD) {
+                        if (startD && itemD < startD) matchDate = false;
+                        if (endD && itemD > endD) matchDate = false;
+                    }
+                }
+
+                return matchSearch && matchBranch && matchRevenue && matchYear && matchMonth && matchDate;
             });
 
             renderTable();
@@ -1988,17 +2253,47 @@
 
         // Event Listeners
         document.getElementById('searchInput')?.addEventListener('input', applyFilters);
-        document.getElementById('branchSelect')?.addEventListener('change', applyFilters);
-        document.getElementById('revenueSelect')?.addEventListener('change', applyFilters);
-        document.getElementById('yearSelect')?.addEventListener('change', applyFilters);
-        document.getElementById('monthSelect')?.addEventListener('change', applyFilters);
+        
+        document.getElementById('startDateInput')?.addEventListener('change', () => {
+            const startVal = document.getElementById('startDateInput').value;
+            if (startVal) {
+                document.getElementById('endDateInput').min = startVal;
+            }
+            applyFilters();
+        });
+
+        document.getElementById('endDateInput')?.addEventListener('change', () => {
+            const endVal = document.getElementById('endDateInput').value;
+            if (endVal) {
+                document.getElementById('startDateInput').max = endVal;
+            }
+            applyFilters();
+        });
 
         document.getElementById('clearFiltersBtn')?.addEventListener('click', () => {
             if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
-            if (document.getElementById('branchSelect')) document.getElementById('branchSelect').value = 'ALL';
-            if (document.getElementById('revenueSelect')) document.getElementById('revenueSelect').value = 'ALL';
-            if (document.getElementById('yearSelect')) document.getElementById('yearSelect').value = 'ALL';
-            if (document.getElementById('monthSelect')) document.getElementById('monthSelect').value = 'ALL';
+            
+            const startIn = document.getElementById('startDateInput');
+            if (startIn) {
+                startIn.value = '';
+                startIn.removeAttribute('min');
+                startIn.removeAttribute('max');
+            }
+            
+            const endIn = document.getElementById('endDateInput');
+            if (endIn) {
+                endIn.value = '';
+                endIn.removeAttribute('min');
+                endIn.removeAttribute('max');
+            }
+
+            filterState = {
+                branchSelect: [],
+                revenueSelect: [],
+                yearSelect: [],
+                monthSelect: []
+            };
+            populateFilterDropdowns();
             applyFilters();
         });
 
